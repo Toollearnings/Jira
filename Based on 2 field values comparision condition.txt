@@ -1,0 +1,4 @@
+if(issue.get("customfield_14335") < issue.get("customfield_10015")){
+return true
+}
+return false

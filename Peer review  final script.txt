@@ -1,0 +1,64 @@
+import org.apache.log4j.Logger
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.fields.CustomField;
+import com.opensymphony.workflow.InvalidInputException;
+import com.atlassian.jira.issue.customfields.option.LazyLoadedOption
+CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager()
+//10003 is the ID of the MLCS custom field
+CustomField mlcs1 = customFieldManager.getCustomFieldObject(new Long('14000'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues1 = issue.getCustomFieldValue(mlcs1)
+CustomField mlcs2 = customFieldManager.getCustomFieldObject(new Long('14100'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues2 = issue.getCustomFieldValue(mlcs2)
+
+CustomField mlcs3 = customFieldManager.getCustomFieldObject(new Long('14101'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues3 = issue.getCustomFieldValue(mlcs3)
+
+CustomField mlcs4 = customFieldManager.getCustomFieldObject(new Long('13711'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues4 = issue.getCustomFieldValue(mlcs4)
+
+CustomField mlcs5 = customFieldManager.getCustomFieldObject(new Long('13712'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues5 = issue.getCustomFieldValue(mlcs5)
+
+CustomField mlcs6 = customFieldManager.getCustomFieldObject(new Long('13713'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues6 = issue.getCustomFieldValue(mlcs6)
+
+CustomField mlcs7 = customFieldManager.getCustomFieldObject(new Long('13722'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues7 = issue.getCustomFieldValue(mlcs7)
+
+CustomField mlcs8 = customFieldManager.getCustomFieldObject(new Long('13723'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues8 = issue.getCustomFieldValue(mlcs8)
+
+CustomField mlcs9 = customFieldManager.getCustomFieldObject(new Long('13724'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues9 = issue.getCustomFieldValue(mlcs9)
+
+CustomField mlcs10 = customFieldManager.getCustomFieldObject(new Long('13725'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def mlcsValues10 = issue.getCustomFieldValue(mlcs10)
+
+
+
+//final LazyLoadedOption value1 = (LazyLoadedOption) issue.getCustomFieldValue(mlc1);
+//final LazyLoadedOption opt1 = value1.get(1);
+//final LazyLoadedOption value2 = (LazyLoadedOption) issue.getCustomFieldValue(mlc2)
+//final LazyLoadedOption opt2 = value2.get(1);
+//final LazyLoadedOption value3 = (LazyLoadedOption) issue.getCustomFieldValue(mlc3);
+//final LazyLoadedOption opt3 = value3.get(1);
+
+final LazyLoadedOption value4 = (LazyLoadedOption) issue.getCustomFieldValue(mlcs4);
+final LazyLoadedOption opt4 = value4;
+final LazyLoadedOption value5 = (LazyLoadedOption) issue.getCustomFieldValue(mlcs5);
+final LazyLoadedOption opt5 = value5;
+final LazyLoadedOption value6 = (LazyLoadedOption) issue.getCustomFieldValue(mlcs6);
+final LazyLoadedOption opt6 = value6;
+
+return mlcsValues1['1'].toString() +"\n" + opt4.toString() +" " +mlcsValues2['1'].toString() + " " +opt5.toString() +"\n" +mlcsValues3['1'].toString() + " " + opt6.toString() +"\n" +mlcsValues7['1'].toString() +"\n" +mlcsValues8['1'].toString() +"\n" +mlcsValues9['1'].toString() +"\n" +mlcsValues10['1'].toString()

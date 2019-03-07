@@ -1,0 +1,9 @@
+<script>
+	AJS.$('#customfield_14315').children(':first').hide();
+		AJS.$('#customfield_14315').change( function (e){
+		setTimeout(function () {
+			AJS.$('[name="customfield_14315:1"] option:first').remove(); 
+		}, 100);
+		});
+		 
+</script>

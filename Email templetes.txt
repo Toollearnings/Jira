@@ -1,0 +1,60 @@
+
+#disable_html_escaping()
+
+#defaultMailHeader("jira.email.title.issue.updated", $changelogauthor)
+#set($baseUrl = $params.get("baseurl"))
+
+#rowWrapperNormalBegin('' 'wrapper-special-margin')
+<div style="font-family:Verdana; font-size:11pt">
+Dear Reviewer,
+
+<p> Your Non-IT Vendor engagement request <a href="$baseUrl/browse/$issue.key">$issue.key</a> has been Resubmitted to your queue by the Requester.</p>
+
+<p> Please login to <a href="JIRA">JIRA</a> at your earliest convenience to review comments and action.</p>
+
+<p> If you have any queries, please contact <a href="procurementops@anz.com">procurementops@anz.com</a>
+
+<br/>
+<br/>
+Regards,
+<br/>
+Group Procurement
+</div>
+#rowWrapperNormalEnd()
+
+#parse("templates/email/html/includes/footer.vm")
+
+
+
+
+#disable_html_escaping()
+
+#defaultMailHeader("jira.email.title.issue.updated", $changelogauthor)
+#set($baseUrl = $params.get("baseurl"))
+
+#rowWrapperNormalBegin('' 'wrapper-special-margin')
+<div style="font-family:Verdana; font-size:11pt">
+Dear requester,
+
+<p> Your Non-IT Vendor engagement request <a href="$baseUrl/browse/$issue.key">$issue.key</a> has been QA approved.  This request will now progress to the Group Procurement Sourcing team for review.</p>
+
+<p> Please login into <a href="JIRA">JIRA</a> for further information</p>
+
+<p> If you have any queries, please contact <a href="procurementops@anz.com">procurementops@anz.com</a>
+
+<br/>
+<br/>
+Regards,
+<br/>
+Group Procurement
+</div>
+#rowWrapperNormalEnd()
+
+#parse("templates/email/html/includes/footer.vm")
+
+
+
+summary:
+
+#disable_html_escaping()
+ $issue.key - $Quality Assurance Completed 

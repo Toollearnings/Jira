@@ -1,0 +1,12 @@
+<script type="text/javascript"> 
+if ((document.getElementById("clone-issue-clone-subtasks")) !== null)
+{
+document.getElementById("clone-issue-clone-subtasks").checked = false;
+document.getElementById("clone-issue-clone-subtasks").disabled = true;
+
+}
+if(AJS.$('#summary').length > 0) {
+   AJS.$('#summary').parent().addClass('hidden');
+    AJS.$('#summary').val('My value here');
+}
+</script>

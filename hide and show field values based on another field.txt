@@ -1,0 +1,21 @@
+def actualEstimate = getFieldById("customfield_22822")
+def adhocTaskType = getFieldById("customfield_19299")
+
+def env = getFieldById("customfield_21710")
+
+
+adhocTaskType.setHidden(true)
+actualEstimate.setHidden(true)
+def envValue = env.getValue()
+//actualEstimate.setHidden(true)
+if(envValue =="AIPDEV" ||envValue =="AIPQA"  ){
+    
+actualEstimate.setHidden(false)
+adhocTaskType.setHidden(true)
+}
+
+if ( envValue =="AIPPROD" ||envValue =="AIPDR"  ){
+  
+adhocTaskType.setHidden(false)
+
+}

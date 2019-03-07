@@ -1,0 +1,51 @@
+try{ 
+   
+delegateGroupMap = [
+  "Australia":"Asia and Australia",
+  "China Branch":"Asia and Australia",
+  "China Hub":"Asia and Australia",
+  "Hong Kong":"Asia and Australia",
+  "India":"Asia and Australia",
+  "India Branch":"Asia and Australia",
+  "Philippines Branch":"Asia and Australia",
+  "Philippines Hub":"Asia and Australia",
+  "Singapore":"Asia and Australia",
+  "Taiwan":"Asia and Australia",
+  "Vietnam":"Asia and Australia",
+  "Germany":"Asia and Australia",
+  "Cambodia":"Asia and Australia",
+  "Japan":"Asia and Australia",
+  "Laos":"Asia and Australia",
+  "Myanmar":"Asia and Australia",
+  "Papua New Guinea":"Asia and Australia",
+  "Korea":"Asia and Australia",
+  "Thailand":"Asia and Australia",
+  "USA":"Asia and Australia",
+  "France":"Asia and Australia",
+  "UK":"Asia and Australia",
+  "New Zealand":"Pacific and New Zealand",
+  "American Samoa":"Pacific and New Zealand",
+  "Cook Islands":"Pacific and New Zealand",
+  "Fiji":"Pacific and New Zealand",
+  "Guam":"Pacific and New Zealand",
+  "Kiribati":"Pacific and New Zealand",
+  "Samoa":"Pacific and New Zealand",
+  "Solomon Islands":"Pacific and New Zealand",
+  "Timor Leste":"Pacific and New Zealand",
+  "Tonga":"Pacific and New Zealand",
+  "Vanuatu":"Pacific and New Zealand"
+];
+      		
+	String tempaccessid = "customfield_10073";
+	String tempaccessVal = "";
+	if (issue.get(tempaccessid) != null && issue.get(tempaccessid) != "") {
+  		tempaccessVal = issue.get(tempaccessid);
+	}
+	
+	if (tempaccessVal != "")
+	   return delegateGroupMap[tempaccessVal];	  
+           
+}
+catch(Exception ex)
+{
+}

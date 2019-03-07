@@ -1,0 +1,21 @@
+Email template:
+
+<p>Dear Reviewer,</p>
+
+
+<p>Non-IT Vendor engagement request <a href="$baseUrl/browse/$issue.key">$issue.key</a> has been created and requires your attention.</p>
+
+<p>Please log into Non IT VEP tool at your earliest convenience to review and action.</p>
+
+<p>If you have any queries, please contact procurementops@anz.com
+<br>
+<br> 
+Regards,
+<br>
+Group Procurement 
+
+
+Subject template:
+
+Procurement – $issue.key - Request Allocation
+

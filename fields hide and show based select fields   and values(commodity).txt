@@ -1,0 +1,342 @@
+<script type="text/javascript"> 
+jQuery(document).ready(function($) {   
+JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, function (e, context) {   
+    callChangeFunction();
+	callChangeCommodityFunction();
+});
+callChangeFunction();
+callChangeCommodityFunction();
+callChangeCountryFunction();
+callChangecontractrangeFunction();
+
+function  callChangeFunction(){	    
+        showHidField();
+    $("#customfield_13366").change(function() {
+        showHidField();
+    });	
+}
+function  callChangeCommodityFunction(){
+        showHidField();
+    $("#customfield_13367").change(function() {
+        showHidField();
+    });	
+}
+
+function  callChangeCountryFunction(){
+        showHidField();
+    $("#customfield_12209").change(function() {
+        showHidField();
+    });	
+}
+
+function  callChangecontractrangeFunction(){
+        showHidField();
+    $("#customfield_13422").change(function() {
+        showHidField();
+    });	
+}
+
+function callmorequestion()
+{
+ //More Question
+	   $(":input[name='customfield_13401']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13402']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13399']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13412']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13416']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13417']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13403']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13403']").closest('fieldset.group').hide(); 		
+	   $(":input[name='customfield_13421']").closest('fieldset.group').hide(); 
+	   $(":input[name='customfield_13424']").closest('fieldset.group').hide(); 
+	   $(":input[name='customfield_13425']").closest('fieldset.group').hide();
+	   $(":input[name='customfield_13426']").closest('fieldset.group').hide();
+	   $(":input[name='customfield_13427']").closest('fieldset.group').hide();
+	   
+	   }
+
+function callfirsthide() {       
+
+      //Finance
+		    $(":input[name='customfield_13385']").closest('fieldset.group').hide();
+            $(":input[name='customfield_13386']").closest('fieldset.group').hide();
+	
+      //Standard
+			$(":input[name='customfield_13399']").closest('fieldset.group').hide(); 	
+			$(":input[name='customfield_13400']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13401']").closest('fieldset.group').hide(); 	
+			$(":input[name='customfield_13402']").closest('fieldset.group').hide(); 	
+			$(":input[name='customfield_13403']").closest('fieldset.group').hide(); 	
+			$(":input[name='customfield_13404']").closest('fieldset.group').hide(); 			
+		//Strategy	
+			$(":input[name='customfield_13405']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13406']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13408']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13409']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13410']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13411']").closest('fieldset.group').hide(); 
+		//Security
+			$(":input[name='customfield_13412']").closest('fieldset.group').hide(); 		 
+			$(":input[name='customfield_13413']").closest('fieldset.group').hide(); 		 
+			$(":input[name='customfield_13416']").closest('fieldset.group').hide(); 	 			
+		//Resourcing 	
+			$(":input[name='customfield_13417']").closest('fieldset.group').hide(); 		 
+			$(":input[name='customfield_13418']").closest('fieldset.group').hide(); 		 
+			$(":input[name='customfield_13419']").closest('fieldset.group').hide();
+			$(":input[name='customfield_13420']").closest('fieldset.group').hide();
+		//Outsourcing	
+			$(":input[name='customfield_13387']").closest('fieldset.group').hide(); 		 	
+}
+
+    function showHidField(){   
+		var dropDownCountryVal = $.trim($("#customfield_12209 :selected").text());		
+		var dropDowncontractrangeval = $.trim($("#customfield_13422 :selected").text());
+		
+		if ((dropDowncontractrangeval == "<= 29,999") || (dropDowncontractrangeval == '<=250,000') || (dropDowncontractrangeval == '<= 50,000') 
+			|| (dropDowncontractrangeval == '<=2,000') || (dropDowncontractrangeval == '<=99,999'))
+		{
+		   callfirsthide();
+		   callmorequestion();
+		}
+		else
+		{		    
+		var dropDownFieldval =
+        $.trim($("#customfield_13366 :selected").text());
+		var dropDownCommodityVal =
+        $.trim($("#customfield_13367 :selected").text());	
+		$('input[type=checkbox]').prop('checked',false);		//Clear the checkbox
+		
+		//More Questions
+		var standMorequest3=$('input[name=customfield_13401]:checked + label').text();	
+		var standMorequest2=$('input[name=customfield_13402]:checked + label').text();
+		var standMorequest1=$('input[name=customfield_13399]:checked + label').text();
+		var secMoreRequest1=$('input[name=customfield_13412]:checked + label').text();
+		var secMoreRequest2=$('input[name=customfield_13416]:checked + label').text();
+		var standMoreRequest5=$('input[name=customfield_13403]:checked + label').text();	
+		var resourceMoreRequest5=$('input[name=customfield_13417]:checked + label').text();	
+		var secMoreRequest3=$('input[name=customfield_13413]:checked + label').text();
+		var resourceMoreRequest2=$('input[name=customfield_13418]:checked + label').text();
+		
+		
+	   	if ((dropDownFieldval == "Change Request") && ((dropDownCommodityVal == "Request for a Cloud Service") || (dropDownCommodityVal == "Request for an IT Consulting, Professional or Managed Service")))
+		{
+			if (secMoreRequest1 == "This CR does not make available any new ANZ data that may change the current security classification level") {             			
+				$(":input[name='customfield_13424']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13424]').prop('checked',false);				
+                $(":input[name='customfield_13424']").closest('fieldset.group').show(); 
+				}					
+		
+		
+		
+		}
+		else
+		{
+			$(":input[name='customfield_13424']").closest('fieldset.group').hide(); 
+		}
+		
+		if ((dropDownFieldval == "Change Request") && (dropDownCommodityVal == "Request for an IT Consulting, Professional or Managed Service"))
+		{
+		if (standMorequest3 == "Does the CR introduce any new services or deliverables from the vendor?") {             			
+				$(":input[name='customfield_13429']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13429]').prop('checked',false);				
+                $(":input[name='customfield_13429']").closest('fieldset.group').show(); 
+        }
+					
+		}		
+		else
+		{
+			$(":input[name='customfield_13429']").closest('fieldset.group').hide(); 
+		}
+		
+		if ((dropDownFieldval == "Change Request") && (dropDownCommodityVal == "Request for a Business Application, Hardware, Software or Network Product"))
+		{
+		if (standMoreRequest5 == "Will the CR introduce any Products, Patterns or Deliverables?") {             			
+				$(":input[name='customfield_13431']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13431]').prop('checked',false);				
+                $(":input[name='customfield_13431']").closest('fieldset.group').show(); 
+        }
+					
+		}
+		else
+		{
+			$(":input[name='customfield_13431']").closest('fieldset.group').hide(); 
+		}
+		
+		if ((dropDownFieldval == "Change Request") && (dropDownCommodityVal == "Request for a Cloud Service" ))
+		{
+		if (standMorequest1 == "This CR is for the same products, services or deliverables which has previously been granted cloud approval") {             			
+				$(":input[name='customfield_13421']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13421]').prop('checked',false);				
+                $(":input[name='customfield_13421']").closest('fieldset.group').show(); 
+        }		
+		if (resourceMoreRequest5 == "There is no increase with the current number of resources or monthly burn rate") {             			
+				$(":input[name='customfield_13425']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13425]').prop('checked',false);				
+                $(":input[name='customfield_13425']").closest('fieldset.group').show(); 
+        }		
+		
+		
+		}
+		else
+		{
+			$(":input[name='customfield_13421']").closest('fieldset.group').hide(); 
+			$(":input[name='customfield_13425']").closest('fieldset.group').hide(); 
+		}
+		
+		if ((dropDownFieldval == "Change Request") && (dropDownCommodityVal == "Request for an IT Consulting, Professional or Managed Service"))
+		{	
+		if (resourceMoreRequest5 == "There is no increase with the current number of resources or monthly burn rate") {             			
+				$(":input[name='customfield_13425']").closest('fieldset.group').hide(); 		
+				}else {            
+				$('input[name=customfield_13425]').prop('checked',false);				
+                $(":input[name='customfield_13425']").closest('fieldset.group').show(); 
+        }		
+		}
+		else
+		{
+			
+			$(":input[name='customfield_13425']").closest('fieldset.group').hide(); 
+		}
+		
+		if ((dropDownFieldval == "Statement of Work"))
+		{
+			if (dropDownCommodityVal == "Request for a Cloud Service")
+			{
+				if (secMoreRequest3 == "Please confirm there is no ANZ data classified as Confidential or Restricted to be provided or available to the cloud service or the cloud service provider") {             			
+					$(":input[name='customfield_13426']").closest('fieldset.group').hide(); 		
+				}
+				else 
+				{            
+					$('input[name=customfield_13426]').prop('checked',false);				
+					$(":input[name='customfield_13426']").closest('fieldset.group').show(); 
+				}
+				
+				if (resourceMoreRequest5 == "There is no increase with the current number of resources or monthly burn rate") {             			
+					$(":input[name='customfield_13427']").closest('fieldset.group').hide(); 		
+				}
+				else {            
+					$('input[name=customfield_13427]').prop('checked',false);				
+					$(":input[name='customfield_13427']").closest('fieldset.group').show(); 
+				}				
+			}
+		
+			else
+			{
+				$(":input[name='customfield_13426']").closest('fieldset.group').hide(); 
+				$(":input[name='customfield_13427']").closest('fieldset.group').hide(); 
+			}
+						
+			if (dropDownCommodityVal == "Request for an IT Consulting, Professional or Managed Service")
+			{
+				if (secMoreRequest2 == "Does this request introduce new services to the bank?") {             			
+					$(":input[name='customfield_13428']").closest('fieldset.group').hide(); 		
+				}
+				else 
+				{            
+					$('input[name=customfield_13428]').prop('checked',false);				
+					$(":input[name='customfield_13428']").closest('fieldset.group').show(); 
+				}
+				
+				if (secMoreRequest3 == "Please confirm there is no ANZ data classified as Confidential or Restricted to be provided or available to the cloud service or the cloud service provider") {             			
+					$(":input[name='customfield_13426']").closest('fieldset.group').hide(); 		
+				}
+				else 
+				{            
+					$('input[name=customfield_13426]').prop('checked',false);				
+					$(":input[name='customfield_13426']").closest('fieldset.group').show(); 
+				}
+				if (resourceMoreRequest2 == "Will the Service Provider be required to deliver costed outcomes that are not based on resource on time & material charging?") {             			
+					$(":input[name='customfield_13427']").closest('fieldset.group').hide(); 		
+				}
+				else 
+				{            
+					$('input[name=customfield_13427]').prop('checked',false);				
+					$(":input[name='customfield_13427']").closest('fieldset.group').show(); 
+				}
+			
+			}
+			else
+			{
+				$(":input[name='customfield_13428']").closest('fieldset.group').hide(); 
+				$(":input[name='customfield_13426']").closest('fieldset.group').hide(); 
+				$(":input[name='customfield_13427']").closest('fieldset.group').hide(); 
+			}
+			if (dropDownCommodityVal == "Request for a Business Application, Hardware, Software or Network Product")
+			{
+				if (secMoreRequest2 == "Have the Products been tested and approved by ANZ security?") {             			
+					$(":input[name='customfield_13424']").closest('fieldset.group').hide(); 		
+				}
+				else 
+				{            
+					$('input[name=customfield_13424]').prop('checked',false);				
+					$(":input[name='customfield_13424']").closest('fieldset.group').show(); 
+				}
+					
+			}
+			
+			else
+			{
+				$(":input[name='customfield_13424']").closest('fieldset.group').hide(); 
+			}
+		}
+	   callfirsthide();
+	
+        if(dropDownFieldval == 'Change Request'){        
+             $(":input[name='customfield_13385']").closest('fieldset.group').show(); // Finance-Q1
+			 $(":input[name='customfield_13386']").closest('fieldset.group').show();
+			 if(dropDownCommodityVal == 'Request for a Cloud Service')
+			 {
+				$(":input[name='customfield_13399']").closest('fieldset.group').show(); // Standard-Q1
+				$(":input[name='customfield_13405']").closest('fieldset.group').show();  //Strategy-01
+				$(":input[name='customfield_13412']").closest('fieldset.group').show();  //Security-01
+				$(":input[name='customfield_13417']").closest('fieldset.group').show(); //Resourcing-01
+			 }
+			 if (dropDownCommodityVal == 'Request for an IT Consulting, Professional or Managed Service')
+			 {
+				$(":input[name='customfield_13401']").closest('fieldset.group').show(); // Standard-Q3
+				$(":input[name='customfield_13408']").closest('fieldset.group').show(); //Strategy-03
+				$(":input[name='customfield_13412']").closest('fieldset.group').show(); //Security-01
+				$(":input[name='customfield_13417']").closest('fieldset.group').show(); //Resourcing-01
+			 }
+			 if (dropDownCommodityVal == 'Request for a Business Application, Hardware, Software or Network Product')
+			 {
+				$(":input[name='customfield_13403']").closest('fieldset.group').show(); // Standard-Q5
+				$(":input[name='customfield_13410']").closest('fieldset.group').show(); //Strategy-05	
+				$(":input[name='customfield_13408']").closest('fieldset.group').show(); //Strategy-03	(reused for security)			
+				$(":input[name='customfield_13419']").closest('fieldset.group').show(); //Resourcing-03
+			 } 
+        }
+		if(dropDownFieldval == 'Statement of Work'){   
+             $(":input[name='customfield_13386']").closest('fieldset.group').show();  // Finance-Q2
+			 if(dropDownCommodityVal == 'Request for a Cloud Service')
+			 {
+				$(":input[name='customfield_13400']").closest('fieldset.group').show();  // Standard-Q2
+				$(":input[name='customfield_13406']").closest('fieldset.group').show(); //Strategy-02
+				$(":input[name='customfield_13413']").closest('fieldset.group').show();  //Security-02
+				$(":input[name='customfield_13417']").closest('fieldset.group').show(); //Resourcing-01		
+			    $(":input[name='customfield_13387']").closest('fieldset.group').show(); // Outsourcing			
+			 }
+			 if (dropDownCommodityVal == 'Request for an IT Consulting, Professional or Managed Service')
+			 {
+				$(":input[name='customfield_13402']").closest('fieldset.group').show();  // Standard-Q4
+				$(":input[name='customfield_13409']").closest('fieldset.group').show(); //Strategy-04
+				$(":input[name='customfield_13413']").closest('fieldset.group').show();  //Security-02
+				$(":input[name='customfield_13418']").closest('fieldset.group').show(); //Resourcing-02
+			 }	
+			 if (dropDownCommodityVal == 'Request for a Business Application, Hardware, Software or Network Product')
+			 {
+				$(":input[name='customfield_13404']").closest('fieldset.group').show();  // Standard-Q6		
+				$(":input[name='customfield_13411']").closest('fieldset.group').show(); //Strategy-06	
+				$(":input[name='customfield_13416']").closest('fieldset.group').show();  //Security-03		
+				$(":input[name='customfield_13420']").closest('fieldset.group').show(); //Resourcing-04				
+			 }	
+        }
+    }  
+	}
+});
+</script>

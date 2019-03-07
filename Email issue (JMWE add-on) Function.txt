@@ -1,0 +1,14 @@
+Subject:
+
+${issue.get("Summary")}
+
+Text Body:
+
+Hi ${issue.get("Requester Name")}
+
+    The contract “${issue.get("CWID")}” is expired. Please create new VEP request to renew the following contract
+
+   CWID: ${issue.get("CWID")}
+   Title: ${issue.get("Title")}
+   
+

@@ -1,0 +1,19 @@
+try{ 
+   
+delegateGroupMap = [
+" Technology New Zealand":"rutterc1"
+];
+      		
+	String tempaccessid = "customfield_10074";
+	String tempaccessVal = "";
+	if (issue.get(tempaccessid) != null && issue.get(tempaccessid) != "") {
+  		tempaccessVal = issue.get(tempaccessid);
+	}
+	
+	if (tempaccessVal != "")
+	   return delegateGroupMap[tempaccessVal];	  
+           
+}
+catch(Exception ex)
+{
+}

@@ -1,0 +1,31 @@
+<script type="text/javascript">
+ 
+jQuery(document).ready(function($) {   
+JIRA.bind(JIRA.Events.NEW_CONTENT_ADDED, function (e, context) {   
+    callChangeFunction();
+});
+callChangeFunction();
+function  callChangeFunction(){
+        showHidField();
+    $("#customfield_14313").change(function() {
+        showHidField();
+    });
+}
+    function showHidField(){	
+	 $("#customfield_14301").closest('div.field-group').hide();         
+     $("#customfield_14302").closest('div.field-group').hide();
+	var dropDownEngCommodityval = $.trim($("#customfield_10032 :selected").text());
+	var dropDownBudgetval = $.trim($("#customfield_11602 :selected").text());
+	var dropDownProposedVendorval = $.trim($("#customfield_14313 :selected").text());
+    
+	if((dropDownEngCommodityval == 'Network') && (dropDownBudgetval = 'Yes') && (dropDownProposedVendorval = 'TELSTRA') ) {        
+            $("#customfield_14301").closest('div.field-group').show(); 
+        }
+	else if(((dropDownEngCommodityval == 'Managed Services') || (dropDownEngCommodityval == 'Professional Services') 
+		|| (dropDownEngCommodityval == 'Consulting Services')) && (dropDownBudgetval = 'Yes') && (dropDownProposedVendorval = 'TELSTRA')) {        
+            $("#customfield_14302").closest('div.field-group').show();
+        }
+		
+    }  
+});
+</script>

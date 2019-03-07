@@ -1,0 +1,30 @@
+try{ 
+   
+delegateGroupMap = [
+" Technology New Zealand":"Pacific and New Zealand"
+];
+      		
+	String tempaccessid = "customfield_10074";
+    String temppreviousregionid = "customfield_12900";
+	String tempaccessVal = "";
+    String PreviousRegion = "";
+    
+    PreviousRegion = issue.get(temppreviousregionid);
+  
+	if (issue.get(tempaccessid) == " Technology New Zealand")
+  	       tempaccessVal = issue.get(tempaccessid);
+		
+	if (tempaccessVal != "")
+     {
+	   return delegateGroupMap[tempaccessVal];	  
+	 }
+    else
+    {
+      return PreviousRegion;	  
+    }
+  
+           
+}
+catch(Exception ex)
+{
+}

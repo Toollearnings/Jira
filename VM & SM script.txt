@@ -1,0 +1,139 @@
+import org.apache.log4j.Logger
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.fields.CustomField;
+import com.opensymphony.workflow.InvalidInputException;
+import com.atlassian.jira.issue.customfields.option.LazyLoadedOption
+CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager()
+
+CustomField DomainObject = customFieldManager.getCustomFieldObject(new Long('13726'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def DomainValue = issue.getCustomFieldValue(DomainObject)
+def Domain = DomainValue[0].toString()
+def TechArea = DomainValue[1].toString()
+
+def result;
+
+def CountryObject = customFieldManager.getCustomFieldObjectByName('What country will the services be delivered in')
+def CountryValues = CountryObject.getValue(issue).toString()
+
+def CommodityObject = customFieldManager.getCustomFieldObjectByName('Commodity')
+def CommodityValues = CommodityObject.getValue(issue).toString()
+
+def rangeObject = customFieldManager.getCustomFieldObjectByName('Select the contract value range in AUD')
+def rangeValues = rangeObject.getValue(issue).toString()
+
+def AsAus = ['Cambodia','China Branch', 'China Hub','India Branch','Japan','Laos','Myanmar','Philippines Branch','Philippines Hub', 'South Korea','Taiwan','Thailand','Vietnam','Papua New Guinea','France','Germany','Hongkong','Singapore','United Kindom','United States']
+
+def Aus = ['Australia']
+def ind = ['India']
+def pac = ['American Samoa','Cook Islands','Fiji','Guam','Kiribati','Samoa','Solomon Islands','Timor Leste','Tonga','Vanuatu']
+def NZ = ['New Zealand'] 
+
+if (CommodityValues =~ /Request for an IT Consulting, Professional or Managed Service/)
+{
+          if (Domain =~ /Banking Services/)
+          {
+                   if (TechArea =~ /Fraud Disputes & Collection Services/)
+                   {
+                             if (CountryValues in AsAus && rangeValues =~ /<=/)
+                               {          
+                                     result = "balachaa" 
+                              }
+                             else if (CountryValues in AsAus && rangeValues =~ />/)
+                                    result = "brucei"
+                             if (CountryValues in Aus && rangeValues =~ /<=/)
+                             {
+                                      result = "balachaa"
+                             }
+                             else if (CountryValues in Aus && rangeValues =~ />/)
+                                    result = "brucei"
+                             if (CountryValues in ind && rangeValues =~ /<=/)
+                             {
+                                     result = "balachaa"
+                             }
+                             else if (CountryValues in ind && rangeValues =~ />/)
+                                 result = "jagirdas"         
+                             if (CountryValues in pac && rangeValues =~ /<=/)
+                               {
+                                      result = "sutherlm"
+                             }
+                             else if (CountryValues in pac && rangeValues =~ />/)
+                                  result = "sutherlm"
+                             if (CountryValues in NZ && rangeValues =~ /<=/)
+                             {
+                                      result = "rawsonj"
+                             }
+                             else if (CountryValues in NZ && rangeValues =~ />/)
+                             result = "sutherlm"                                                                                                                         
+                   }
+				   if (TechArea =~ /Payments & Transaction Services/)
+                   {
+                             if (CountryValues in AsAus && rangeValues =~ /<=/)
+                               {          
+                                     result = "balachaa" 
+                              }
+                             else if (CountryValues in AsAus && rangeValues =~ />/)
+                                    result = "brucei"
+                             if (CountryValues in Aus && rangeValues =~ /<=/)
+                             {
+                                      result = "balachaa"
+                             }
+                             else if (CountryValues in Aus && rangeValues =~ />/)
+                                    result = "brucei"
+                             if (CountryValues in ind && rangeValues =~ /<=/)
+                             {
+                                     result = "balachaa"
+                             }
+                             else if (CountryValues in ind && rangeValues =~ />/)
+                                 result = "jagirdas"         
+                             if (CountryValues in pac && rangeValues =~ /<=/)
+                               {
+                                      result = "sutherlm"
+                             }
+                             else if (CountryValues in pac && rangeValues =~ />/)
+                             result = "sutherlm"
+                             if (CountryValues in NZ && rangeValues =~ /<=/)
+                             {
+                                      result = "rawsonj"
+                             }
+                             else if (CountryValues in NZ && rangeValues =~ />/)
+                             result = "rawsonj"                                                                                                                         
+                   }
+                   }
+                                              
+            }
+ else if (CommodityValues =~ /Request for a Business Application, Hardware, Software or Network Product/)
+{
+                         if (CountryValues in AsAus && rangeValues =~ /<=/)
+                               {          
+                                     result = "balachaa" 
+                              }
+                             else if (CountryValues in AsAus && rangeValues =~ />/)
+                                    result = "miteffm"
+                             if (CountryValues in Aus && rangeValues =~ /<=/)
+                             {
+                                      result = "balachaa"
+                             }
+                             else if (CountryValues in Aus && rangeValues =~ />/)
+                                    result = "miteffm"
+                             if (CountryValues in ind && rangeValues =~ /<=/)
+                             {
+                                     result = "balachaa"
+                             }
+                             else if (CountryValues in ind && rangeValues =~ />/)
+                                 result = "miteffm"         
+                             if (CountryValues in pac && rangeValues =~ /<=/)
+                               {
+                                      result = "sutherlm"
+                             }
+                             else if (CountryValues in pac && rangeValues =~ />/)
+                                  result = "sutherlm"
+                             if (CountryValues in NZ && rangeValues =~ /<=/)
+                             {
+                                      result = "rawsonj"
+                             }
+                             else if (CountryValues in NZ && rangeValues =~ />/)
+                             result = "anastasc"                                                                                                                         
+                   }
+return result;	

@@ -1,0 +1,112 @@
+/* 
+Groovy Script for transition : Load App in workspace
+This script will triiger Bamboo plan which will 
+Download Package from Artifactory and then upload to developer's workspace.
+*/
+package com.onresolve.jira.groovy.canned.workflow.postfunctions
+
+import com.atlassian.jira.component.ComponentAccessor;
+import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.fields.CustomField;
+import com.atlassian.jira.issue.Issue;
+import com.atlassian.jira.issue.MutableIssue;
+import com.atlassian.jira.issue.IssueManager;
+import com.atlassian.jira.issue.resolution.Resolution;
+import com.atlassian.jira.issue.ModifiedValue;
+import com.atlassian.jira.issue.util.DefaultIssueChangeHolder;
+import org.apache.commons.codec.binary.Base64;
+import com.atlassian.jira.bc.issue.IssueService;
+import com.atlassian.jira.issue.IssueInputParameters;
+import com.atlassian.jira.issue.customfields.manager.OptionsManager;
+import com.atlassian.jira.issue.customfields.option.Options;
+import com.atlassian.jira.event.type.EventDispatchOption;
+import java.util.Collections;
+import java.util.List;
+import java.net.URLEncoder;
+
+def projectKey= 'EQS';
+def buildKey= 'PKG2DEV';
+
+
+def requestMethod = 'POST';
+def URLParam = []
+
+Issue parentIssue = issue
+def jira_issue_id = issue.getKey()
+
+def customFieldManager = ComponentAccessor.getCustomFieldManager()
+//get App Name
+def appNameCF = customFieldManager.getCustomFieldObjectByName("Solution Name");
+def appName_with_spaces = parentIssue.getCustomFieldValue(appNameCF);
+def appName = appName_with_spaces;
+def publish_AppName = appName;
+
+// get Business Domain Name
+def businessDomainCF = customFieldManager.getCustomFieldObjectByName("Business Unit");
+def String businessDomain = parentIssue.getCustomFieldValue(businessDomainCF);
+
+def cf_EQS_App_Asset = customFieldManager.getCustomFieldObjectByName("Solution");
+def str_EQS_App_Asset = parentIssue.getCustomFieldValue(cf_EQS_App_Asset);
+
+//def baseURL = "https://bamboo.service./rest/api/latest/queue/$projectKey-$buildKey";
+//String authStringEnc = "QVVDRFhRbGlrYXBwZHNhOjkzZnpZSzU1OWZDa3Q2N04=";  // AUCDXQlikappdsa
+def baseURL = "https://bamboo.service./rest/api/latest/queue/$projectKey-$buildKey";
+String authStringEnc = "QVVDRFhRbGlrYXBwZHNhOjkzZnpZSzU1OWZDa3Q2N04=";  // AUCDXQlikappdsa
+
+// toStream variable will decide where app will be published
+
+def ToStream = businessDomain.toString();
+
+URLParam = ['bamboo.variable.AppName': URLEncoder.encode(appName.toString(), "UTF-8"), 
+            'bamboo.variable.JiraIssueID': jira_issue_id, 
+            'bamboo.variable.businessDomain': URLEncoder.encode(businessDomain.toString(), "UTF-8"), 
+            'bamboo.variable.App_Asset_ID': str_EQS_App_Asset, 
+            'bamboo.variable.publish_AppName': URLEncoder.encode(publish_AppName.toString(), "UTF-8"), 
+            'bamboo.variable.ToStream': URLEncoder.encode(ToStream, "UTF-8")];
+
+def query = URLParam.collect { it }.join('&');
+URL url;
+
+url = new java.net.URL(baseURL + "?" + query);
+
+URLConnection connection = url.openConnection();
+connection.setRequestProperty("Authorization", "Basic " + authStringEnc);
+connection.setRequestMethod(requestMethod);
+connection.setRequestProperty("Content-Type", "application/xml");
+connection.setRequestProperty("Accept", "application/xml");
+connection.connect();
+println("status:" + connection.getResponseCode())
+println("status:" + connection.getResponseMessage())
+connection.getContent()
+//----------------------------------------------------------------------------------------
+
+def requiredGroupsOjb = customFieldManager.getCustomFieldObjectByName("Required Groups");
+
+def groupManager = ComponentAccessor.getGroupManager();
+def user = ComponentAccessor.getJiraAuthenticationContext().loggedInUser
+IssueManager eqsappissueManager = ComponentAccessor.getIssueManager();
+MutableIssue eqsappissue =  eqsappissueManager.getIssueObject(str_EQS_App_Asset.toString())
+
+
+//Get details of App Name and Business Domain from App Asset
+def eqsappname = customFieldManager.getCustomFieldObjectByName("Solution Name");
+def app_name = eqsappissue.getCustomFieldValue(eqsappname)
+def eqsbusinessdomain = customFieldManager.getCustomFieldObjectByName("Business Unit");
+def business_domain = eqsappissue.getCustomFieldValue(eqsbusinessdomain)
+// added in release 1.2
+//def cf_domain_project = customFieldManager.getCustomFieldObject("customfield_28080");//customfield_28080 = Domain_Project
+//def cf_domain_project = customFieldManager.getCustomFieldObject("customfield_10205");//customfield_10205 = Domain_Project
+def cf_domain_project = customFieldManager.getCustomFieldObjectByName("Domain")
+def str_domain_project = eqsappissue.getCustomFieldValue(cf_domain_project);
+//
+def group // just declaring
+List myList = new ArrayList();
+// following code was supposed to change groups to _stewards. but changing it to _all based on request from Saini/Val
+for (String str:str_domain_project) {
+    group = groupManager.getGroup("jira_eqs_" + str.toLowerCase() + "_all")
+    if(group !=null)
+   		 myList.add(group);
+}
+//Set Required groups value. //SAVE THE ISSUE
+parentIssue.setCustomFieldValue(requiredGroupsOjb, myList)
+eqsappissueManager.updateIssue(user, parentIssue, EventDispatchOption.ISSUE_ASSIGNED , false)

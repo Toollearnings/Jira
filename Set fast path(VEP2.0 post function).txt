@@ -1,0 +1,197 @@
+import com.atlassian.jira.bc.issue.IssueService
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.Issue
+import com.atlassian.jira.issue.IssueInputParameters
+import com.atlassian.jira.project.Project
+import groovy.transform.Field
+import com.atlassian.jira.issue.customfields.option.LazyLoadedOption
+import com.atlassian.jira.config.SubTaskManager
+import com.atlassian.jira.user.ApplicationUser
+
+def customFieldManager = ComponentAccessor.getCustomFieldManager()
+@Field
+SubTaskManager subTaskManager = ComponentAccessor.getSubTaskManager()
+@Field
+
+def Commodity = 'Commodity'
+def CommodityObject = customFieldManager.getCustomFieldObjectByName(Commodity)
+
+def RequestType = 'Request Type'
+def RequestTypeObject = customFieldManager.getCustomFieldObjectByName(RequestType)
+
+def FinancialQ1 = 'Financial - Q1'
+def FinancialQ1Object = customFieldManager.getCustomFieldObjectByName(FinancialQ1)
+
+def FinancialQ2 = 'Financial - Q2'
+def FinancialQ2Object = customFieldManager.getCustomFieldObjectByName(FinancialQ2)
+
+def Standard1 = 'Standard - 1'
+def Standard1Object = customFieldManager.getCustomFieldObjectByName(Standard1)
+
+def Standard2 = 'Standard - 2'
+def Standard2Object = customFieldManager.getCustomFieldObjectByName(Standard2)
+
+def Standard3 = 'Standard - 3'
+def Standard3Object = customFieldManager.getCustomFieldObjectByName(Standard3)
+
+def Standard4 = 'Standard - 4'
+def Standard4Object = customFieldManager.getCustomFieldObjectByName(Standard4)
+
+def Standard5 = 'Standard - 5'
+def Standard5Object = customFieldManager.getCustomFieldObjectByName(Standard5)
+
+def Standard6 = 'Standard - 6'
+def Standard6Object = customFieldManager.getCustomFieldObjectByName(Standard6)
+
+def Strategy1 = 'Strategy -1'
+def Strategy1Object = customFieldManager.getCustomFieldObjectByName(Strategy1)
+
+def Strategy2 = 'Strategy -2'
+def Strategy2Object = customFieldManager.getCustomFieldObjectByName(Strategy2)
+
+def Strategy4 = 'Strategy -4'
+def Strategy4Object = customFieldManager.getCustomFieldObjectByName(Strategy4)
+
+def Strategy5 = 'Strategy -5'
+def Strategy5Object = customFieldManager.getCustomFieldObjectByName(Strategy5)
+
+def Strategy6 = 'Strategy -6'
+def Strategy6Object = customFieldManager.getCustomFieldObjectByName(Strategy6)
+
+def Security1 = 'Security -1'
+def Security1Object = customFieldManager.getCustomFieldObjectByName(Security1)
+
+def Security2 = 'Security -2'
+def Security2Object = customFieldManager.getCustomFieldObjectByName(Security2)
+
+def Security3 = 'Security -3'
+def Security3Object = customFieldManager.getCustomFieldObjectByName(Security3)
+
+def Resourcing1 = 'Resourcing -1'
+def Resourcing1Object = customFieldManager.getCustomFieldObjectByName(Resourcing1)
+
+def Resourcing2 = 'Resourcing -2'
+def Resourcing2Object = customFieldManager.getCustomFieldObjectByName(Resourcing2)
+
+def Resourcing3 = 'Resourcing -3'
+def Resourcing3Object = customFieldManager.getCustomFieldObjectByName(Resourcing3)
+
+def Resourcing4 = 'Resourcing -4'
+def Resourcing4Object = customFieldManager.getCustomFieldObjectByName(Resourcing4)
+
+def Outsourcing = 'Outsourcing'
+def OutsourcingObject = customFieldManager.getCustomFieldObjectByName(Outsourcing)
+
+
+def Strategy3Security5 = 'Strategy - 3 / Security - 5'
+def Strategy3Security5Object = customFieldManager.getCustomFieldObjectByName(Strategy3Security5)
+
+def Country = 'What country will the services be delivered in'
+def CountryObject = customFieldManager.getCustomFieldObjectByName(Country)
+
+def range = 'Select the contract value range in AUD' 
+def rangeObject = customFieldManager.getCustomFieldObjectByName(range)
+
+Issue issue = issue
+def CommodityValues = CommodityObject.getValue(issue)
+def RequestTypeValues = RequestTypeObject.getValue(issue)
+def FinancialQ1Values = FinancialQ1Object.getValue(issue)
+def FinancialQ2Values = FinancialQ2Object.getValue(issue)
+def Standard1Values = Standard1Object.getValue(issue)
+def Standard2Values = Standard2Object.getValue(issue)
+def Standard3Values = Standard3Object.getValue(issue)
+def Standard4Values = Standard4Object.getValue(issue)
+def Standard5Values = Standard5Object.getValue(issue)
+def Standard6Values = Standard6Object.getValue(issue)
+def Strategy1Values = Strategy1Object.getValue(issue)
+def Strategy2Values = Strategy2Object.getValue(issue)
+def Strategy4Values = Strategy4Object.getValue(issue)
+def Strategy5Values = Strategy5Object.getValue(issue)
+def Strategy6Values = Strategy6Object.getValue(issue)
+def Security1Values = Security1Object.getValue(issue)
+def Security2Values = Security2Object.getValue(issue)
+def Security3Values = Security3Object.getValue(issue)
+def Resourcing1Values = Resourcing1Object.getValue(issue)
+def Resourcing2Values = Resourcing2Object.getValue(issue)
+def Resourcing3Values = Resourcing3Object.getValue(issue)
+def Resourcing4Values = Resourcing4Object.getValue(issue)
+def OutsourcingValues = OutsourcingObject.getValue(issue)
+def Strategy3Security5Values = Strategy3Security5Object.getValue(issue)
+def CountryValues = CountryObject.getValue(issue)
+def rangeValues = rangeObject.getValue(issue)
+
+
+if (rangeValues =~ /<= 29,999/ || rangeValues =~ /<=250,000/ || rangeValues =~ /<= 50,000/ || rangeValues =~ /<=2,000/ || rangeValues =~ /<=99,999/)
+{ 
+  return "Yes"
+}
+
+else if (CommodityValues =~ /Request for a Cloud Service/ && RequestTypeValues =~ /Change Request/ &&
+FinancialQ1Values =~ /Total value of this CR and all previous changes are below 25% of the original contract Or the total value of original contract and all CRs \(including this one\) \<\$1M/ &&
+FinancialQ2Values =~ /BSBCC owner have fully funded budget to coverage total charge/ &&
+Standard1Values =~ /This CR is for the same products, services or deliverables which has previously been granted cloud approval/ &&
+Security1Values =~ /This CR does not make available any new ANZ data that may change the current security classification level/ &&
+Strategy1Values =~ /The Current products\/services on the domain roadmap/ &&
+Resourcing1Values =~ /There is no increase with the current number of resources or monthly burn rate/)
+{
+	return "Yes"
+}
+else if (CommodityValues =~ /Request for an IT Consulting, Professional or Managed Service/ && 
+RequestTypeValues =~ /Statement of Work/ && 
+FinancialQ2Values =~ /BSBCC owner have fully funded budget to coverage total charge/ &&
+Standard4Values =~ /Does this request introduce new services to the bank?/ &&
+Strategy4Values =~ /Is the contract with an agreed Technology strategic vendor?/ && 
+Security2Values =~ /Please confirm there is no ANZ data classified as Confidential or Restricted to be provided or available to the cloud service or the cloud service provider/ &&
+Resourcing2Values =~ /Will the Service Provider be required to deliver costed outcomes that are not based on resource on time & material charging?/)
+{
+	return "Yes"
+}
+
+else if (CommodityValues =~ /Request for a Cloud Service/ && 
+RequestTypeValues =~ /Statement of Work/ && 
+FinancialQ2Values =~ /BSBCC owner have fully funded budget to coverage total charge/ &&
+OutsourcingValues =~ /Has the outsourcing assessment commenced\/completed?/ &&
+Standard2Values =~ /Has a Cloud Approval request been submitted for these requirements?/ &&
+Strategy2Values =~ /Is current contract with a Technology strategic vendor?/ &&
+Security2Values =~ /Please confirm there is no ANZ data classified as Confidential or Restricted to be provided or available to the cloud service or the cloud service provider/ &&
+Resourcing1Values =~ /There is no increase with the current number of resources or  monthly burn rate/ )
+{
+	return "Yes"
+}
+
+else if (CommodityValues =~ /Request for an IT Consulting, Professional or Managed Service/ && 
+RequestTypeValues =~ /Change Request/ && 
+FinancialQ1Values =~ /Total value of this CR and all previous changes below 25% of the original contract\? Or is the total value of original contract and all CRs \(including this one\) \<\$1M/ &&
+Standard3Values =~ /Does the CR introduce any new services or deliverables from the vendor\?/ &&
+Strategy3Security5Values =~ /N\\A/ &&
+Security1Values =~ /This CR does not make available any new ANZ data that may change the current security classification level/ &&
+Resourcing1Values =~ /There is no increase with the current number of resources or  monthly burn rate/)
+{
+		return "Yes"
+}
+
+else if ( CommodityValues =~ /Request for a Business Application, Hardware, Software or Network Product/ && 
+RequestTypeValues =~ /Change Request/ &&
+FinancialQ1Values =~ /Total value of this CR and all previous changes below 25% of the original contract\? Or is the total value of original contract and all CRs \(including this one\) \<\$1M/ &&
+Standard5Values =~ /Will the CR introduce any Products, Patterns or Deliverables?/ &&
+Strategy3Security5Values =~ /N\\A/ &&
+Strategy5Values =~ /Is this requirement on the Arcitecture  Roadmap?/ &&
+Resourcing3Values =~ /Please confirm that this CR does not require an uplift in delivery and support resources \(internal or external\) resulting in an increase in the monthly burn rate\?/ 
+){
+	return "Yes"
+}
+
+else if ( RequestTypeValues =~ /Statement of Work/ && 
+CommodityValues =~ /Request for a Business Application, Hardware, Software or Network Product/ &&
+FinancialQ2Values =~ /BSBCC owner have fully funded budget to coverage total charge/ &&
+Standard6Values =~ /Are the Products and their deployment patterns fully endorsed and approved by Technology Architecture Council?/ &&
+Strategy6Values =~ /Is the contract with an agreed Technology strategic vendor?/ && 
+Security3Values =~ /Have the Products been tested and approved by ANZ security?/ &&
+Resourcing4Values =~ /Confirm the Product will not require ANZ to increase resources to manage and maintain it throughout the expected life-cycle?/
+)
+{
+	return "Yes"
+}
+
+else
+  return "No"

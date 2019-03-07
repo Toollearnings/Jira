@@ -1,0 +1,74 @@
+import org.apache.log4j.Logger
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.fields.CustomField;
+import com.opensymphony.workflow.InvalidInputException;
+import com.atlassian.jira.issue.customfields.option.LazyLoadedOption
+CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager()
+
+CustomField DomainObject = customFieldManager.getCustomFieldObject(new Long('14318'))
+// log.info("DEBUG MESSAGE: mlcs = $mlcs")
+def DomainValue = issue.getCustomFieldValue(DomainObject)
+def Domain = DomainValue[0].toString()
+def TechArea = DomainValue[1].toString()
+
+def result;
+
+def EngagementObject = customFieldManager.getCustomFieldObjectByName('Source Of Engagement Funding')
+def EngagementValues = EngagementObject.getValue(issue).toString()
+
+def BudgetObject = customFieldManager.getCustomFieldObjectByName('Is Budget Available')
+def BudgetValues = BudgetObject.getValue(issue).toString()
+
+def CommodityObject = customFieldManager.getCustomFieldObjectByName('Engagement Commodity')
+def CommodityValues = CommodityObject.getValue(issue).toString()
+
+def VendorObject = customFieldManager.getCustomFieldObjectByName('Proposed Vendor')
+def VendorValues = VendorObject.getValue(issue).toString()
+
+if (Domain =~ /Information Security Office/)
+          {
+                   if (BudgetValues =~ /Yes/)
+                   {
+                        if (VendorValues =~ /PRICE WATERHOUSE COOPERS/)
+                       {
+                          
+                         if (CommodityValues =~ /Managed Service/)
+                               {          
+                                     result = "Yes" 
+                              }
+                             else if (CommodityValues =~ /Professional Service/)
+                                    
+                             {
+                                      result = "Yes"
+                             }
+                             else if (CommodityValues =~ /Consulting Service/)
+                                    
+                             {
+                                     result = "Yes"
+                             }
+                         
+                         } 
+                        else if (VendorValues =~ /ACCENTURE SERVICES PRIVATE LIMITED/)
+                       {
+                          
+                         if (CommodityValues =~ /Managed Service/)
+                               {          
+                                     result = "Yes" 
+                              }
+                             else if (CommodityValues =~ /Professional Service/)
+                                    
+                             {
+                                      result = "Yes"
+                             }
+                             else if (CommodityValues =~ /Consulting Service/)
+                                    
+                             {
+                                     result = "Yes"
+                             }
+                         
+                         } 
+                                                                                                                                                  
+                   }
+           }
+return No;

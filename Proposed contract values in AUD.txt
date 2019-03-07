@@ -1,0 +1,48 @@
+The Proposed amount in AUD calculated from "Proposed Engagement value" divided by "Exchange Rate"
+<!-- @@Formula: 
+
+public double roundDouble(double value, int places) {
+    try{
+		if (places > 0){ 
+			java.math.BigDecimal bd = new java.math.BigDecimal(value);
+			bd = bd.setScale(places, java.math.RoundingMode.HALF_UP);
+			return bd.doubleValue();
+		}
+		return value;
+    }
+    catch(Exception ex)
+    {
+      return -1;
+    }
+}
+
+
+public boolean areStringsEqual(String str1, String str2)
+{
+    if (str1 == null && str2 == null)
+        return true;
+    if (str1 == null || str2 == null)
+        return false;
+
+    return str1.equalsIgnoreCase(str2);
+}
+
+
+Double rate = (issue.get("customfield_10038") != null ? issue.get("customfield_10038") : 1);
+Double estimatedValue = (issue.get("customfield_10015") != null ? issue.get("customfield_10015") : 0);
+String currency = (issue.get("customfield_10023") != null ? issue.get("customfield_10023"): "");
+
+if (areStringsEqual(currency,"AUD"))
+{
+  if( estimatedValue> 0)
+    return estimatedValue;
+}
+else {
+    if(rate > 0 && estimatedValue > 0){
+        return roundDouble((estimatedValue/rate),2);
+    }
+    
+}
+
+
+-->
